@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import styled from "styled-components"
-import axios from 'axios';
 import Button from '@mui/material/Button';
 import { IsurgeryData } from '../App';
 
@@ -10,7 +9,6 @@ type Props = {
 }
 
 const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToCart }) => {
-    console.log(surgeryItems);
     return (
         <Container>
             <InfoBtnBox>

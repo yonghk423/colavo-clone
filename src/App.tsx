@@ -16,7 +16,7 @@ export type IsurgeryData = {
 function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
-  console.log(surgeryData);
+  console.log(cartItems);
 
   const handleAddToCart = (clickedItem:IsurgeryData) => {
     setCartItems(prev => {
@@ -53,7 +53,7 @@ function App() {
     <Layout>    
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}/>
+          <Route path="/" element={<Home cartItems={cartItems} />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
           <Route path="/DiscountMenu" element={<DiscountMenu />}/>                                
         </Routes>

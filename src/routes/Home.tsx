@@ -1,10 +1,19 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import Button from '@mui/material/Button';
+import { IsurgeryData } from '../App';
 
-const Home = () => {
+type Props = {
+  cartItems: IsurgeryData[];
+//   handleAddToCart: (clickedItem: IsurgeryData ) => void;
+//   removeFromCart: (id: number) => void;
+};
+
+const Home:React.FC<Props> = ( { cartItems } ) => {
+    console.log(cartItems);
+    const calculateTotal = (items: IsurgeryData[]) =>
+    items.reduce((ack: number, item) => ack + item.count * item.price, 0);
     const navigate = useNavigate();
     
     const surgeryClick = () => {
@@ -27,12 +36,18 @@ const Home = () => {
                 </div>
             </InfoBtnBox>
             <DataBox>
-                <div>데이터 추가 될 부분</div>
+                {cartItems?.map((ele, id) => (
+                    <div key={id}>
+                        <div>{ele?.name}</div>
+                        <div>{ele?.price}</div>
+                        <div>{ele?.count}</div>
+                    </div>                   
+                ))}
             </DataBox>
             <FooterBox>
                 <TotalCountBox>
                     <div>합계</div>
-                    <div>0원</div>
+                    <div>${calculateTotal(cartItems).toFixed(2)}</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button variant="contained">확인</Button>
