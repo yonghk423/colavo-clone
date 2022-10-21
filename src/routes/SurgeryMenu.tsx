@@ -2,22 +2,42 @@ import React, {useState, useEffect, useCallback} from 'react';
 import styled from "styled-components"
 import axios from 'axios';
 import Button from '@mui/material/Button';
+const BASE_PATH = "https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData";
+
+interface IsurgeryData {
+    name:string;
+    price:number;
+}
 
 const SurgeryMenu = () => {
+    const [surgeryData, setSurgeryData]:any = useState();
+    const arrData = Object.values({...surgeryData})
+    console.log(arrData);
+    useEffect(() => {
+        getData()    
+    }, [])
+
+    const getData = async () => {
+    try {
+        const response = await axios.get(BASE_PATH)
+        const resSurgeryData = await response?.data?.items;        
+        setSurgeryData((resSurgeryData));
+    } catch(err) {
+        console.log("Error >>", err);
+        }
+    }
+
     return (
         <Container>
             <InfoBtnBox>
                 <div className='infoBox'>
-                    <div className='infoName'>김용희</div>
-                    <div>2022. 10.20. 오후 5:00</div>
-                </div>
-                <div className='btnBox'>                    
-                    <Button style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
-                    <Button style={{backgroundColor: "#ffb2dd"}} variant="contained">확인</Button>
-                </div>
+                    <div className='infoName'>시술메뉴</div>                    
+                </div>                
             </InfoBtnBox>
             <DataBox>
-                <div>데이터 추가 될 부분</div>
+                {arrData?.map((ele:any) => (
+                    <div>{ele?.name}</div>
+                ))}
             </DataBox>
             <FooterBox>
                 <TotalCountBox>
