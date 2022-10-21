@@ -2,31 +2,15 @@ import React, {useState, useEffect, useCallback} from 'react';
 import styled from "styled-components"
 import axios from 'axios';
 import Button from '@mui/material/Button';
-const BASE_PATH = "https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData";
+import { IsurgeryData } from '../App';
 
-interface IsurgeryData {
-    name:string;
-    price:number;
+type Props = {
+    surgeryItems: IsurgeryData[];
+    handleAddToCart: (clickedItem: IsurgeryData ) => void;
 }
 
-const SurgeryMenu = () => {
-    const [surgeryData, setSurgeryData]:any = useState();
-    const arrData = Object.values({...surgeryData})
-    console.log(arrData);
-    useEffect(() => {
-        getData()    
-    }, [])
-
-    const getData = async () => {
-    try {
-        const response = await axios.get(BASE_PATH)
-        const resSurgeryData = await response?.data?.items;        
-        setSurgeryData((resSurgeryData));
-    } catch(err) {
-        console.log("Error >>", err);
-        }
-    }
-
+const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToCart }) => {
+    console.log(surgeryItems);
     return (
         <Container>
             <InfoBtnBox>
@@ -35,17 +19,16 @@ const SurgeryMenu = () => {
                 </div>                
             </InfoBtnBox>
             <DataBox>
-                {arrData?.map((ele:any) => (
-                    <div>{ele?.name}</div>
+                {surgeryItems?.map((ele, id) => (
+                    <div key={id}>
+                        <div onClick={() => handleAddToCart(ele)}>{ele?.name}</div>
+                        <div>{ele?.price}</div>
+                    </div>
                 ))}
             </DataBox>
-            <FooterBox>
-                <TotalCountBox>
-                    <div>합계</div>
-                    <div>0원</div>
-                </TotalCountBox>
+            <FooterBox>               
                 <NextBtn>
-                    <Button variant="contained">확인</Button>
+                    <Button variant="contained">완료</Button>
                 </NextBtn>
             </FooterBox>
         </Container>
@@ -82,6 +65,7 @@ const InfoBtnBox = styled.div`
 
 const DataBox = styled.div`
     height: 450px;
+    overflow: auto;
 `;
 
 const FooterBox = styled.div`
@@ -89,13 +73,6 @@ const FooterBox = styled.div`
     justify-content: center;
     justify-items: center;
     font-weight: bolder;
-`;
-
-const TotalCountBox = styled.div`
-    margin: 10px;
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 100px;   
 `;
 
 const NextBtn = styled.div`
