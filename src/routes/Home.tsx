@@ -5,12 +5,12 @@ import Button from '@mui/material/Button';
 import { IsurgeryData } from '../App';
 
 type Props = {
-  cartItems: IsurgeryData[];
-//   handleAddToCart: (clickedItem: IsurgeryData ) => void;
-//   removeFromCart: (id: number) => void;
+    cartItems: IsurgeryData[];
+    addToCart: (clickedItem: IsurgeryData) => void;
+    removeFromCart: (clickedItem: IsurgeryData) => void;
 };
 
-const Home:React.FC<Props> = ( { cartItems } ) => {
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart } ) => {
     console.log(cartItems);
     const calculateTotal = (items: IsurgeryData[]) =>
     items.reduce((ack: number, item) => ack + item.count * item.price, 0);
@@ -32,7 +32,7 @@ const Home:React.FC<Props> = ( { cartItems } ) => {
                 </div>
                 <div className='btnBox'>                    
                     <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
-                    <Button onClick={DiscountClick} style={{backgroundColor: "#ffb2dd"}} variant="contained">확인</Button>
+                    <Button onClick={DiscountClick} style={{backgroundColor: "#ffb2dd"}} variant="contained">할인</Button>
                 </div>
             </InfoBtnBox>
             <DataBox>
@@ -40,7 +40,23 @@ const Home:React.FC<Props> = ( { cartItems } ) => {
                     <div key={id}>
                         <div>{ele?.name}</div>
                         <div>{ele?.price}</div>
-                        <div>{ele?.count}</div>
+                        <div>{ele?.count}</div>                       
+                        <Button
+                            size='small'
+                            disableElevation
+                            variant='contained'
+                            onClick={() => addToCart(ele)}
+                        >
+                            +
+                        </Button>
+                        <Button
+                            size='small'
+                            disableElevation
+                            variant='contained'
+                            onClick={() => removeFromCart(ele)}
+                        >
+                            -
+                        </Button>
                     </div>                   
                 ))}
             </DataBox>

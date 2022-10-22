@@ -18,7 +18,11 @@ function App() {
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
   console.log(cartItems);
 
+  const getTotalItems = (items: IsurgeryData[]) =>
+    items.reduce((ack: number, item) => ack + item.count, 0);
+
   const handleAddToCart = (clickedItem:IsurgeryData) => {
+    console.log(clickedItem);
     setCartItems(prev => {
       // 1. Is the item already added in the cart?
       const isItemInCart = prev.find(item => item.name === clickedItem.name);
@@ -26,14 +30,28 @@ function App() {
       if (isItemInCart) {
         return prev.map(item =>
           item.name === clickedItem.name
-            ? { ...item, amount: item.count + 1 }
+            ? { ...item, count: item.count + 1 }
             : item
         );
       }
       // First time the item is added
-      return [...prev, { ...clickedItem, amount: 1 }];
+      return [...prev, { ...clickedItem, count: 1 }];
     });
   }
+
+  const handleRemoveFromCart = (clickedItem:IsurgeryData) => {
+    console.log(clickedItem.name);
+    setCartItems(prev =>
+      prev.reduce((ack, item) => {
+        if (item.name === clickedItem.name) {
+          if (item.count === 1) return ack;
+          return [...ack, { ...item, count: item.count - 1 }];
+        } else {
+          return [...ack, item];
+        }
+      }, [] as IsurgeryData[])
+    );
+  };
 
    useEffect(() => {
         getData()    
@@ -53,7 +71,7 @@ function App() {
     <Layout>    
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home cartItems={cartItems} />}/>
+          <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} removeFromCart={handleRemoveFromCart} />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
           <Route path="/DiscountMenu" element={<DiscountMenu />}/>                                
         </Routes>
