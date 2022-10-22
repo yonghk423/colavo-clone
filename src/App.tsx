@@ -25,8 +25,25 @@ function App() {
   console.log(cartItems);
   console.log(disCountData);
   
+  useEffect(() => {
+        getData()    
+    }, [])
+
+  const getData = async () => {
+    try {
+        const response = await axios.get("https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData")
+        const resSurgeryData = await response?.data?.items;
+        const surgeryData:any = Object.values({...resSurgeryData})
+        const resDiscountData = await response?.data?.discounts;
+        const discountData:any = Object.values({...resDiscountData})
+        setSurgeryData(surgeryData);
+        setDiscountData(discountData)
+    } catch(err) {
+        console.log("Error >>", err);
+        }
+    }
+  
   const handleAddToCart = (clickedItem:IsurgeryData) => {
-    console.log(clickedItem);
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.name === clickedItem.name);
 
@@ -54,31 +71,17 @@ function App() {
       }, [] as IsurgeryData[])
     );
   };
-
-   useEffect(() => {
-        getData()    
-    }, [])
-  const getData = async () => {
-    try {
-        const response = await axios.get("https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData")
-        const resSurgeryData = await response?.data?.items;
-        const surgeryData:any = Object.values({...resSurgeryData})
-        const resDiscountData = await response?.data?.discounts;
-        const discountData:any = Object.values({...resDiscountData})
-        setSurgeryData(surgeryData);
-        setDiscountData(discountData)
-    } catch(err) {
-        console.log("Error >>", err);
-        }
-    }
-
+   
+  const handleAddDiscount = (clickedItem:IdiscountData) => {
+    console.log(clickedItem);
+  }
   return (
     <Layout>    
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} removeFromCart={handleRemoveFromCart} />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
-          <Route path="/DiscountMenu" element={<DiscountMenu discountItems={disCountData} />}/>                                
+          <Route path="/DiscountMenu" element={<DiscountMenu handleAddDiscount={handleAddDiscount} discountItems={disCountData} />}/>                                
         </Routes>
       </BrowserRouter>
     </Layout>

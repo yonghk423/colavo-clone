@@ -6,9 +6,10 @@ import { IdiscountData } from '../App';
 
 type Props = {
     discountItems: IdiscountData[];
+    handleAddDiscount: (clickedItem: IdiscountData ) => void;
 }
 
-const DiscountMenu:React.FC<Props> = ( { discountItems } ) => {
+const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount } ) => {
     console.log(discountItems);
     return (
         <Container>
@@ -26,7 +27,7 @@ const DiscountMenu:React.FC<Props> = ( { discountItems } ) => {
                 <div>
                     {discountItems?.map((ele, id) => (
                     <div key={id}>    
-                        <div>{ele?.name}</div>
+                        <div onClick={()=>handleAddDiscount(ele)}>{ele?.name}</div>
                         <div>{ele?.rate}</div>
                     </div>    
                     ))}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -10,19 +10,16 @@ type Props = {
     removeFromCart: (clickedItem: IsurgeryData) => void;
 };
 
-const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart } ) => {
-    console.log(cartItems);
-    const calculateTotal = (items: IsurgeryData[]) =>
-    items.reduce((ack: number, item) => ack + item.count * item.price, 0);
-    const navigate = useNavigate();
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart } ) => {  
+    const navigate = useNavigate();  
+    const surgeryClick = () => {navigate(`./SurgeryMenu`)};
+    const DiscountClick = () => {navigate(`./DiscountMenu`)};    
+   
+    const calculateTotal = (cartItems: IsurgeryData[]) => (
+    cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
+    );
+    console.log(calculateTotal(cartItems));
     
-    const surgeryClick = () => {
-        navigate(`./SurgeryMenu`);
-    }
-
-    const DiscountClick = () => {
-        navigate(`./DiscountMenu`);
-    }
     return (
         <Container>
             <InfoBtnBox>
@@ -63,7 +60,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart } ) => {
             <FooterBox>
                 <TotalCountBox>
                     <div>합계</div>
-                    <div>${calculateTotal(cartItems).toFixed(2)}</div>
+                    <div>₩{calculateTotal(cartItems)}</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button variant="contained">확인</Button>
