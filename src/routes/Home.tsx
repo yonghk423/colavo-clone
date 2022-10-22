@@ -8,16 +8,18 @@ import { IdiscountData } from '../App';
 type Props = {
     cartItems: IsurgeryData[];
     discountItems: IdiscountData[];
+    discountOption: IdiscountData | undefined;
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
 };
 
-const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems } ) => {
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption } ) => {
     console.log(discountItems);  
+    console.log(discountOption)
     const navigate = useNavigate();  
     const surgeryClick = () => {navigate(`./SurgeryMenu`)};
-    const DiscountClick = () => {navigate(`./DiscountMenu`)};    
-   
+    const DiscountClick = () => {navigate(`./DiscountMenu`)}; 
+    
     let calculateTotal = (cartItems: IsurgeryData[]) => (
     cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
     );

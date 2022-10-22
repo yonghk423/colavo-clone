@@ -21,6 +21,7 @@ export type IdiscountData = {
 function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
   const [disCountData, setDiscountData] = useState<IdiscountData[]>([]);
+  const [discountOption, setDiscountOption] = useState<IdiscountData>();
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
   console.log(cartItems);
   console.log(disCountData);
@@ -74,12 +75,19 @@ function App() {
    
   const handleAddDiscount = (clickedItem:IdiscountData) => {
     console.log(clickedItem);
+    setDiscountOption(clickedItem)
   }
   return (
     <Layout>    
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} discountItems={disCountData} removeFromCart={handleRemoveFromCart} />}/>
+          <Route path="/" element={<Home 
+            addToCart={handleAddToCart} 
+            cartItems={cartItems} 
+            discountItems={disCountData} 
+            discountOption={discountOption}
+            removeFromCart={handleRemoveFromCart} 
+            />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
           <Route path="/DiscountMenu" element={<DiscountMenu handleAddDiscount={handleAddDiscount} discountItems={disCountData} />}/>                                
         </Routes>
