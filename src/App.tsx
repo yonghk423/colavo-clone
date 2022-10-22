@@ -13,15 +13,21 @@ export type IsurgeryData = {
     count: number;
 }
 
+export type IdiscountData = {
+  name:string;
+  rate:number;
+}
+
 function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
+  const [disCountData, setDiscountData] = useState<IdiscountData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
   console.log(cartItems);
+  console.log(disCountData);
   
   const handleAddToCart = (clickedItem:IsurgeryData) => {
     console.log(clickedItem);
     setCartItems(prev => {
-      // 1. Is the item already added in the cart?
       const isItemInCart = prev.find(item => item.name === clickedItem.name);
 
       if (isItemInCart) {
@@ -31,7 +37,6 @@ function App() {
             : item
         );
       }
-      // First time the item is added
       return [...prev, { ...clickedItem, count: 1 }];
     });
   }
@@ -57,8 +62,11 @@ function App() {
     try {
         const response = await axios.get("https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData")
         const resSurgeryData = await response?.data?.items;
-        const data:any = Object.values({...resSurgeryData})
-        setSurgeryData(data);
+        const surgeryData:any = Object.values({...resSurgeryData})
+        const resDiscountData = await response?.data?.discounts;
+        const discountData:any = Object.values({...resDiscountData})
+        setSurgeryData(surgeryData);
+        setDiscountData(discountData)
     } catch(err) {
         console.log("Error >>", err);
         }
@@ -70,7 +78,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} removeFromCart={handleRemoveFromCart} />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
-          <Route path="/DiscountMenu" element={<DiscountMenu />}/>                                
+          <Route path="/DiscountMenu" element={<DiscountMenu discountItems={disCountData} />}/>                                
         </Routes>
       </BrowserRouter>
     </Layout>

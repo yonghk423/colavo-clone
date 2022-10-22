@@ -2,8 +2,14 @@ import React, {useState, useEffect, useCallback} from 'react';
 import styled from "styled-components"
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { IdiscountData } from '../App';
 
-const DiscountMenu = () => {
+type Props = {
+    discountItems: IdiscountData[];
+}
+
+const DiscountMenu:React.FC<Props> = ( { discountItems } ) => {
+    console.log(discountItems);
     return (
         <Container>
             <InfoBtnBox>
@@ -17,7 +23,14 @@ const DiscountMenu = () => {
                 </div>
             </InfoBtnBox>
             <DataBox>
-                <div>데이터 추가 될 부분</div>
+                <div>
+                    {discountItems?.map((ele, id) => (
+                    <div key={id}>    
+                        <div>{ele?.name}</div>
+                        <div>{ele?.rate}</div>
+                    </div>    
+                    ))}
+                </div>
             </DataBox>
             <FooterBox>
                 <TotalCountBox>
