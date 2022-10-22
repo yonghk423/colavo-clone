@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components"
 import './App.css';
 import axios from 'axios';
@@ -79,7 +79,7 @@ function App() {
     <Layout>    
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} removeFromCart={handleRemoveFromCart} />}/>
+          <Route path="/" element={<Home addToCart={handleAddToCart} cartItems={cartItems} discountItems={disCountData} removeFromCart={handleRemoveFromCart} />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
           <Route path="/DiscountMenu" element={<DiscountMenu handleAddDiscount={handleAddDiscount} discountItems={disCountData} />}/>                                
         </Routes>

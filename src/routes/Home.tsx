@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import { IsurgeryData } from '../App';
+import { IdiscountData } from '../App';
 
 type Props = {
     cartItems: IsurgeryData[];
+    discountItems: IdiscountData[];
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
 };
 
-const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart } ) => {  
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems } ) => {
+    console.log(discountItems);  
     const navigate = useNavigate();  
     const surgeryClick = () => {navigate(`./SurgeryMenu`)};
     const DiscountClick = () => {navigate(`./DiscountMenu`)};    
