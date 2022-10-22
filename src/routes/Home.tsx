@@ -18,7 +18,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     const surgeryClick = () => {navigate(`./SurgeryMenu`)};
     const DiscountClick = () => {navigate(`./DiscountMenu`)};    
    
-    const calculateTotal = (cartItems: IsurgeryData[]) => (
+    let calculateTotal = (cartItems: IsurgeryData[]) => (
     cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
     );
     
@@ -26,8 +26,10 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
         ele.rate * calculateTotal(cartItems)
     )
     console.log(test);
-    let test1 = test.reduce((a, b) => (a + b))
+    let test1 = test.reduce((a, b) => (a + b), 0)
     console.log(test1);
+    let test2 = calculateTotal(cartItems) - test1
+    console.log(test2);
     return (
         <Container>
             <InfoBtnBox>
