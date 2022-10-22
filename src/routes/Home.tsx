@@ -21,8 +21,13 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     const calculateTotal = (cartItems: IsurgeryData[]) => (
     cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
     );
-    console.log(calculateTotal(cartItems));
     
+    let test = discountItems.map((ele) => 
+        ele.rate * calculateTotal(cartItems)
+    )
+    console.log(test);
+    let test1 = test.reduce((a, b) => (a + b))
+    console.log(test1);
     return (
         <Container>
             <InfoBtnBox>
