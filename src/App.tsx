@@ -17,10 +17,7 @@ function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
   console.log(cartItems);
-
-  const getTotalItems = (items: IsurgeryData[]) =>
-    items.reduce((ack: number, item) => ack + item.count, 0);
-
+  
   const handleAddToCart = (clickedItem:IsurgeryData) => {
     console.log(clickedItem);
     setCartItems(prev => {
