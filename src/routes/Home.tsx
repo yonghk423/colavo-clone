@@ -8,7 +8,7 @@ import { IdiscountData } from '../App';
 type Props = {
     cartItems: IsurgeryData[];
     discountItems: IdiscountData[];
-    discountOption: IdiscountData | undefined;
+    discountOption: IdiscountData[] | undefined;
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components"
 import Button from '@mui/material/Button';
 import { IdiscountData } from '../App';
@@ -6,10 +6,22 @@ import { IdiscountData } from '../App';
 type Props = {
     discountItems: IdiscountData[];
     handleAddDiscount: (clickedItem: IdiscountData ) => void;
+    handleCheckChange: any
+    sibal:any
 }
 
-const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount } ) => {
+const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handleCheckChange, sibal, } ) => {
+    const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(true));
+    console.log(checkedState);
     console.log(discountItems);
+    const handleOnChange = (position:any) => {
+    const updatedCheckedState = discountItems.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);    
+
+  };
     return (
         <Container>
             <InfoBtnBox>
@@ -19,16 +31,26 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount } ) =>
                 </div>
                 <div className='btnBox'>                    
                     <Button style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
-                    <Button style={{backgroundColor: "#ffb2dd"}} variant="contained">확인</Button>
+                    <Button style={{backgroundColor: "#ffb2dd"}} variant="contained">할인</Button>
                 </div>
             </InfoBtnBox>
             <DataBox>
                 <div>
-                    {discountItems?.map((ele, id) => (
+                    {discountItems?.map((ele:any, id) => (
                     <div key={id}>    
                         <div onClick={()=>handleAddDiscount(ele)}>{ele?.name}</div>
-                        <div>{ele?.rate}</div>
-                    </div>    
+                        <div>{ele?.rate}</div>                    
+                        <input
+                            type="checkbox"
+                            onChange={(e) => {
+                                handleCheckChange(e.target.checked ,ele)
+                                }
+                           
+                            }
+                            
+                            checked={checkedState[id]}>
+                        </input> 
+                    </div>   
                     ))}
                 </div>
             </DataBox>

@@ -21,11 +21,12 @@ export type IdiscountData = {
 function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
   const [disCountData, setDiscountData] = useState<IdiscountData[]>([]);
-  const [discountOption, setDiscountOption] = useState<IdiscountData>();
+  const [discountOption, setDiscountOption] = useState<IdiscountData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
-  console.log(cartItems);
-  console.log(disCountData);
-  
+  const [sibal, setSibal]:any = useState([])
+  // console.log(cartItems);
+  // console.log(disCountData);
+  console.log(sibal);
   useEffect(() => {
         getData()    
     }, [])
@@ -75,8 +76,19 @@ function App() {
    
   const handleAddDiscount = (clickedItem:IdiscountData) => {
     console.log(clickedItem);
-    setDiscountOption(clickedItem)
   }
+
+  const handleCheckChange = (checked:any ,name:any) => {
+    console.log(checked);
+    console.log(name);
+    if(checked) {
+      console.log(name);
+      setSibal([...sibal, name])
+    } 
+    else {
+      setSibal(sibal.filter((ele:any) => String(ele?.name) !== String(name?.name)))
+    }
+  } 
   return (
     <Layout>    
       <BrowserRouter>
@@ -86,10 +98,15 @@ function App() {
             cartItems={cartItems} 
             discountItems={disCountData} 
             discountOption={discountOption}
-            removeFromCart={handleRemoveFromCart} 
+            removeFromCart={handleRemoveFromCart}            
             />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
-          <Route path="/DiscountMenu" element={<DiscountMenu handleAddDiscount={handleAddDiscount} discountItems={disCountData} />}/>                                
+          <Route path="/DiscountMenu" element={<DiscountMenu 
+            handleAddDiscount={handleAddDiscount} 
+            discountItems={disCountData}
+            handleCheckChange={handleCheckChange} 
+            sibal={sibal}
+           />}/>                                
         </Routes>
       </BrowserRouter>
     </Layout>
