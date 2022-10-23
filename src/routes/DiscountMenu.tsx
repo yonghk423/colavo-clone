@@ -6,7 +6,7 @@ import { IdiscountData } from '../App';
 
 type Props = {
     discountItems: IdiscountData[];
-    handleCheckChange: any
+    handleCheckChange: (check:boolean, ele:IdiscountData) => void;
 }
 
 const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) => {

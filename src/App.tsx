@@ -70,7 +70,7 @@ function App() {
     );
   };
 
-  const handleCheckChange = (checked:boolean ,ele:IdiscountData) => {
+  const handleCheckChange = (checked:boolean, ele:IdiscountData) => {
     console.log(checked);
     console.log(ele);
     if(checked) {
