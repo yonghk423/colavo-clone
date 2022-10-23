@@ -84,7 +84,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             <FooterBox>
                 <TotalCountBox>
                     <div className='total'>합계</div>
-                    <div>{test.length === 0 ? ttest2 : test2 }원</div>
+                    <div className='totalPrice'>{test.length === 0 ? ttest2 : test2 }원</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button style={{backgroundColor: "#d1c4e9" , width: '300px'}} variant="contained">다음</Button>
@@ -168,6 +168,9 @@ const TotalCountBox = styled.div`
     .total {
         color:#9e9e9e;
         font-size: 15px; 
+    }
+    .totalPrice {
+        color:#ba68c8;
     }
 `;
 
