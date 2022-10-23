@@ -46,6 +46,7 @@ function App() {
     }
   
   const handleAddToCart = (clickedItem:IsurgeryData) => {
+    console.log(clickedItem);
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.name === clickedItem.name);
 
@@ -60,15 +61,31 @@ function App() {
     });
   }
 
+  const handleAddToFirstCart = (clickedItem:IsurgeryData) => {
+    console.log(clickedItem);
+    setCartItems(prev => {
+      const isItemInCart = prev.find(item => item.name === clickedItem.name);
+
+      if (isItemInCart) {
+        // return prev.map(item =>
+        //   item.name === clickedItem.name
+        //     ? { ...item, count: item.count + 1 }
+        //     : item
+        // );
+      }
+      return [{ ...clickedItem, count: 1 }];
+    });
+  }
+
   const handleRemoveFromCart = (clickedItem:IsurgeryData) => {
     console.log(clickedItem.name);
     setCartItems(prev =>
-      prev.reduce((ack, item) => {
+      prev.reduce((first, item) => {
         if (item.name === clickedItem.name) {
-          if (item.count === 1) return ack;
-          return [...ack, { ...item, count: item.count - 1 }];
+          if (item.count === 1) return first;
+          return [...first, { ...item, count: item.count - 1 }];
         } else {
-          return [...ack, item];
+          return [...first, item];
         }
       }, [] as IsurgeryData[])
     );
@@ -100,7 +117,7 @@ function App() {
             discountOption={discountOption}
             removeFromCart={handleRemoveFromCart}    
             />}/>
-          <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
+          <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToFirstCart={handleAddToFirstCart} surgeryItems={surgeryData} />}/>
           <Route path="/DiscountMenu" element={<DiscountMenu 
             handleAddDiscount={handleAddDiscount} 
             discountItems={disCountData}

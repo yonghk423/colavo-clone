@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import Button from '@mui/material/Button';
 import { IdiscountData } from '../App';
@@ -11,6 +12,9 @@ type Props = {
 }
 
 const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handleCheckChange, discountOption, } ) => {
+    const navigate = useNavigate();  
+    const surgeryClick = () => {navigate(`/SurgeryMenu`)};
+    const homeClick = () => {navigate(`/`)}
     const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(false));
     console.log(checkedState);
     console.log(discountItems);
@@ -30,7 +34,7 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
                     <div>2022. 10.20. 오후 5:00</div>
                 </div>
                 <div className='btnBox'>                    
-                    <Button style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
+                    <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
                     <Button style={{backgroundColor: "#ffb2dd"}} variant="contained">할인</Button>
                 </div>
             </InfoBtnBox>
@@ -58,20 +62,16 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
                     ))}
                 </div>
             </DataBox>
-            <FooterBox>
-                <TotalCountBox>
-                    <div>합계</div>
-                    <div>0원</div>
-                </TotalCountBox>
+            <FooterBox>                
                 <NextBtn>
-                    <Button variant="contained">확인</Button>
+                    <Button onClick={homeClick} variant="contained">확인</Button>
                 </NextBtn>
             </FooterBox>
         </Container>
     )
 }
 
-export default DiscountMenu;
+export default React.memo(DiscountMenu);
 
 const Container = styled.div`
     margin: 30px;

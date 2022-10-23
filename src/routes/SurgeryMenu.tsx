@@ -2,13 +2,16 @@ import React from 'react';
 import styled from "styled-components"
 import Button from '@mui/material/Button';
 import { IsurgeryData } from '../App';
+import { useNavigate } from "react-router-dom";
 
 type Props = {
     surgeryItems: IsurgeryData[];
-    handleAddToCart: (clickedItem: IsurgeryData ) => void;
+    handleAddToFirstCart: (clickedItem: IsurgeryData ) => void;
 }
 
-const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToCart }) => {
+const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToFirstCart }) => {
+    const navigate = useNavigate();
+    const homeClick = () => {navigate(`/`)}
     return (
         <Container>
             <InfoBtnBox>
@@ -19,21 +22,21 @@ const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToCart }) => {
             <DataBox>
                 {surgeryItems?.map((ele, id) => (
                     <div key={id}>
-                        <div onClick={() => handleAddToCart(ele)}>{ele?.name}</div>
+                        <div onClick={() => handleAddToFirstCart(ele)}>{ele?.name}</div>
                         <div>{ele?.price}</div>
                     </div>
                 ))}
             </DataBox>
             <FooterBox>               
                 <NextBtn>
-                    <Button variant="contained">완료</Button>
+                    <Button onClick={homeClick} variant="contained">완료</Button>
                 </NextBtn>
             </FooterBox>
         </Container>
     )
 }
 
-export default SurgeryMenu;
+export default React.memo(SurgeryMenu);
 
 const Container = styled.div`
     margin: 30px;

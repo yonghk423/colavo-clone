@@ -17,11 +17,10 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     console.log(discountItems);  
     console.log(discountOption)
     const navigate = useNavigate();  
-    const surgeryClick = () => {navigate(`./SurgeryMenu`)};
-    const DiscountClick = () => {navigate(`./DiscountMenu`)}; 
-    
+    const surgeryClick = () => {navigate(`/SurgeryMenu`)};
+    const DiscountClick = () => {navigate(`/DiscountMenu`)}; 
     let calculateTotal = (cartItems: IsurgeryData[]) => (
-    cartItems.reduce((init:number, cartItems) => init + cartItems.count * cartItems.price, 0)
+    cartItems.reduce((first:number, cartItems) => first + cartItems.count * cartItems.price, 0)
     );
 
  //-------------------------할인 옵션 선택 -------------------------------------------
@@ -94,7 +93,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     )
 }
 
-export default Home;
+export default React.memo(Home);
 
 const Container = styled.div`
     margin: 30px;
