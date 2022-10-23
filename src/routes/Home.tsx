@@ -58,7 +58,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
                             size='small'
                             disableElevation
                             variant='contained'
-                            style={{backgroundColor: "#d1c4e9" , width: '50px'}}
+                            style={{backgroundColor: "#d1c4e9" , width: '50px', margin: '1px'}}
                             onClick={() => addToCart(ele)}
                         >
                             +
@@ -67,7 +67,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
                             size='small'
                             disableElevation
                             variant='contained'
-                            style={{backgroundColor: "#d1c4e9" , width: '50px'}}
+                            style={{backgroundColor: "#d1c4e9" , width: '50px', margin: '1px'}}
                             onClick={() => removeFromCart(ele)}
                         >
                             -

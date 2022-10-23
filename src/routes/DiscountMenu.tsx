@@ -31,17 +31,18 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) =>
                     <div className='infoName'>김용희</div>
                 </div>
                 <div className='btnBox'>                    
-                    <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
-                    <Button style={{backgroundColor: "#ffb2dd"}} variant="contained">할인</Button>
+                    <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6", margin: "5px"}} variant="contained">시술</Button>
+                    <Button style={{backgroundColor: "#ffb2dd", margin: "5px"}} variant="contained">할인</Button>
                 </div>
             </InfoBtnBox>
             <DataBox>
                 <div>
                     {discountItems?.map((ele, id) => (
                     <div className='data' key={id}>    
-                        <div>{ele?.name}</div>
-                        <div>{ele?.rate}</div>                    
+                        <div className='name'>{ele?.name}</div>
+                        <div className='rate'>{ele?.rate}%</div>                    
                         <input
+                            className='check'
                             type="checkbox"
                             id={`custom-checkbox-${id}`}
                             name={ele?.name}
@@ -58,7 +59,7 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) =>
             </DataBox>
             <FooterBox>                
                 <NextBtn>
-                    <Button onClick={homeClick} variant="contained">확인</Button>
+                    <Button onClick={homeClick} style={{backgroundColor: "#d1c4e9" , width: '300px'}} variant="contained">완료</Button>
                 </NextBtn>
             </FooterBox>
         </Container>
@@ -83,6 +84,7 @@ const InfoBtnBox = styled.div`
         font-weight: bolder;
         .infoName {
             margin: 10px;
+            font-size: 20px;
         }
     }
     .btnBox {
@@ -96,7 +98,25 @@ const InfoBtnBox = styled.div`
 const DataBox = styled.div`
     height: 450px;
     .data {
+        border-top: 1px solid #9e9e9e;
         margin: 10px;
+        .name {
+            font-weight: bolder;
+            margin: 10px;
+        }
+        .price {
+            color:#9e9e9e;
+            font-size: 12px; 
+            margin: 5px;
+        }        
+        .rate {
+            color:#9e9e9e;
+            font-size: 12px; 
+            margin: 5px;
+        }        
+        .check {
+            margin: 5px;
+        }
     }
 `;
 
@@ -105,6 +125,8 @@ const FooterBox = styled.div`
     justify-content: center;
     justify-items: center;
     font-weight: bolder;
+    border-top: 1px solid #9e9e9e;
+    margin: 10px;
 `;
 
 const NextBtn = styled.div`
