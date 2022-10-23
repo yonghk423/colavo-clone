@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -8,13 +8,12 @@ import { IdiscountData } from '../App';
 type Props = {
     cartItems: IsurgeryData[];
     discountItems: IdiscountData[];
-    // discountOption: IdiscountData[] | undefined;
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
     discountOption:any
 };
 
-const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption} ) => {
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption} ) => {    
     console.log(discountItems);  
     console.log(discountOption)
     const navigate = useNavigate();  
@@ -22,17 +21,29 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     const DiscountClick = () => {navigate(`./DiscountMenu`)}; 
     
     let calculateTotal = (cartItems: IsurgeryData[]) => (
-    cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
+    cartItems.reduce((init:number, cartItems) => init + cartItems.count * cartItems.price, 0)
     );
-    
-    let test = discountOption.map((ele:any) => 
+
+ //-------------------------할인 옵션 선택 -------------------------------------------
+       let test = discountOption.map((ele:any) => 
         ele.rate * calculateTotal(cartItems)
     )
-    console.log(test);
+    console.log(test.length);
     let test1 = test.reduce((a:any, b:any) => (a + b), 0)
     console.log(test1);
     let test2 = calculateTotal(cartItems) - test1
     console.log(test2);
+//-------------------------할인 옵션 선택 X-------------------------------------------
+
+    let ttest = discountItems.map((ele:any) => 
+        ele.rate * calculateTotal(cartItems)
+    )
+    console.log(ttest);
+    let ttest1 = ttest.reduce((a:any, b:any) => (a + b), 0)
+    console.log(ttest1);
+    let ttest2 = calculateTotal(cartItems) - ttest1
+    console.log(ttest2);
+
     return (
         <Container>
             <InfoBtnBox>
@@ -73,7 +84,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             <FooterBox>
                 <TotalCountBox>
                     <div>합계</div>
-                    <div>₩{test2}</div>
+                    <div>₩{test.length === 0 ? ttest2 : test2 }</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button variant="contained">확인</Button>
