@@ -82,15 +82,16 @@ const DataBox = styled.div`
     .data {
         background-color: rgba(225, 225, 225, 0.2);
         box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);  
-        margin: 15px;
-        cursor: pointer;
-        .nameBox {
+        margin: 15px;        
+        .nameBox {            
             display: flex;
             .name {
                 font-weight: bolder;
+                cursor: pointer;
             }
         }
         .price {
+            cursor: pointer;
             color:#9e9e9e;
             font-size: 12px;
         }       
