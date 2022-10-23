@@ -11,12 +11,19 @@ type Props = {
 
 const SurgeryMenu:React.FC<Props> = ({ surgeryItems, handleAddToFirstCart }) => {
     const navigate = useNavigate();
+    const surgeryClick = () => {navigate(`/SurgeryMenu`)};
+    const DiscountClick = () => {navigate(`/DiscountMenu`)}; 
     const homeClick = () => {navigate(`/`)}
     return (
         <Container>
             <InfoBtnBox>
                 <div className='infoBox'>
-                    <div className='infoName'>시술메뉴</div>                    
+                    <div className='infoName'>시술메뉴</div>
+                    <div>2022. 10.20. 오후 5:00</div>                    
+                </div>
+                <div className='btnBox'>                    
+                    <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
+                    <Button onClick={DiscountClick} style={{backgroundColor: "#ffb2dd"}} variant="contained">할인</Button>
                 </div>                
             </InfoBtnBox>
             <DataBox>
