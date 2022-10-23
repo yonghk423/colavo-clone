@@ -8,12 +8,13 @@ import { IdiscountData } from '../App';
 type Props = {
     cartItems: IsurgeryData[];
     discountItems: IdiscountData[];
-    discountOption: IdiscountData[] | undefined;
+    // discountOption: IdiscountData[] | undefined;
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
+    discountOption:any
 };
 
-const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption } ) => {
+const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption} ) => {
     console.log(discountItems);  
     console.log(discountOption)
     const navigate = useNavigate();  
@@ -24,11 +25,11 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     cartItems.reduce((ack:number, cartItems) => ack + cartItems.count * cartItems.price, 0)
     );
     
-    let test = discountItems.map((ele) => 
+    let test = discountOption.map((ele:any) => 
         ele.rate * calculateTotal(cartItems)
     )
     console.log(test);
-    let test1 = test.reduce((a, b) => (a + b), 0)
+    let test1 = test.reduce((a:any, b:any) => (a + b), 0)
     console.log(test1);
     let test2 = calculateTotal(cartItems) - test1
     console.log(test2);
@@ -72,7 +73,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             <FooterBox>
                 <TotalCountBox>
                     <div>합계</div>
-                    <div>₩{calculateTotal(cartItems)}</div>
+                    <div>₩{test2}</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button variant="contained">확인</Button>

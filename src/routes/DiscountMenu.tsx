@@ -7,15 +7,15 @@ type Props = {
     discountItems: IdiscountData[];
     handleAddDiscount: (clickedItem: IdiscountData ) => void;
     handleCheckChange: any
-    sibal:any
+    discountOption:any
 }
 
-const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handleCheckChange, sibal, } ) => {
-    const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(true));
+const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handleCheckChange, discountOption, } ) => {
+    const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(false));
     console.log(checkedState);
     console.log(discountItems);
     const handleOnChange = (position:any) => {
-    const updatedCheckedState = discountItems.map((item, index) =>
+    const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
 
@@ -42,8 +42,12 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
                         <div>{ele?.rate}</div>                    
                         <input
                             type="checkbox"
+                            id={`custom-checkbox-${id}`}
+                            name={ele?.name}
+                            value={ele?.name}
                             onChange={(e) => {
                                 handleCheckChange(e.target.checked ,ele)
+                                handleOnChange(id)
                                 }
                            
                             }
