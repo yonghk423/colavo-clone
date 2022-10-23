@@ -57,7 +57,6 @@ function App() {
   }
 
   const handleRemoveFromCart = (clickedItem:IsurgeryData) => {
-    console.log(clickedItem.name);
     setCartItems(prev =>
       prev.reduce((first, item) => {
         if (item.name === clickedItem.name) {
@@ -71,8 +70,6 @@ function App() {
   };
 
   const handleCheckChange = (checked:boolean, ele:IdiscountData) => {
-    console.log(checked);
-    console.log(ele);
     if(checked) {
       setDiscountOption([...discountOption, ele])
     } 
@@ -92,9 +89,7 @@ function App() {
             removeFromCart={handleRemoveFromCart}    
             />}/>
           <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
-          <Route path="/DiscountMenu" 
-          element={<DiscountMenu  discountItems={disCountData} handleCheckChange={handleCheckChange} 
-          />}/>                                
+          <Route path="/DiscountMenu" element={<DiscountMenu  discountItems={disCountData} handleCheckChange={handleCheckChange} />}/>                                
         </Routes>
       </BrowserRouter>
     </Layout>

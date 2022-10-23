@@ -14,8 +14,6 @@ type Props = {
 };
 
 const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption} ) => {    
-    console.log(discountItems);  
-    console.log(discountOption)
     const navigate = useNavigate();  
     const surgeryClick = () => {navigate(`/SurgeryMenu`)};
     const DiscountClick = () => {navigate(`/DiscountMenu`)}; 
@@ -26,7 +24,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
  //-------------------------할인 옵션 선택 -------------------------------------------
     let test = discountOption.map((ele) => ele.rate * calculateTotal(cartItems))
     let test1 = test.reduce((a:number, b:number) => (a + b), 0)
-    let test2 = calculateTotal(cartItems) - test1
+    let optionTotal = calculateTotal(cartItems) - test1
 //-------------------------할인 옵션 선택 X-------------------------------------------
     let ttest = discountItems.map((ele) => 
         ele.rate * calculateTotal(cartItems)
@@ -34,8 +32,8 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     console.log(ttest);
     let ttest1 = ttest.reduce((a:number, b:number) => (a + b), 0)
     console.log(ttest1);
-    let ttest2 = calculateTotal(cartItems) - ttest1
-    console.log(ttest2);
+    let total = calculateTotal(cartItems) - ttest1
+    console.log(total);
 
     return (
         <Container>
@@ -84,7 +82,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             <FooterBox>
                 <TotalCountBox>
                     <div className='total'>합계</div>
-                    <div className='totalPrice'>{test.length === 0 ? ttest2.toFixed(2) : test2.toFixed(2) }원</div>
+                    <div className='totalPrice'>{test.length === 0 ? total.toFixed(2) : optionTotal.toFixed(2) }원</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button style={{backgroundColor: "#d1c4e9" , width: '300px'}} variant="contained">다음</Button>
@@ -125,6 +123,7 @@ const InfoBtnBox = styled.div`
 
 const DataBox = styled.div`
     height: 450px;
+    overflow: auto;
     .data {
         border-top: 1px solid #9e9e9e;
         margin: 10px;
