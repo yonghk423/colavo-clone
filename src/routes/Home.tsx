@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -10,7 +10,7 @@ type Props = {
     discountItems: IdiscountData[];
     addToCart: (clickedItem: IsurgeryData) => void;
     removeFromCart: (clickedItem: IsurgeryData) => void;
-    discountOption:any
+    discountOption:IdiscountData[];
 };
 
 const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountItems, discountOption} ) => {    
@@ -24,21 +24,15 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     );
 
  //-------------------------할인 옵션 선택 -------------------------------------------
-       let test = discountOption.map((ele:any) => 
-        ele.rate * calculateTotal(cartItems)
-    )
-    console.log(test.length);
-    let test1 = test.reduce((a:any, b:any) => (a + b), 0)
-    console.log(test1);
+    let test = discountOption.map((ele) => ele.rate * calculateTotal(cartItems))
+    let test1 = test.reduce((a:number, b:number) => (a + b), 0)
     let test2 = calculateTotal(cartItems) - test1
-    console.log(test2);
 //-------------------------할인 옵션 선택 X-------------------------------------------
-
-    let ttest = discountItems.map((ele:any) => 
+    let ttest = discountItems.map((ele) => 
         ele.rate * calculateTotal(cartItems)
     )
     console.log(ttest);
-    let ttest1 = ttest.reduce((a:any, b:any) => (a + b), 0)
+    let ttest1 = ttest.reduce((a:number, b:number) => (a + b), 0)
     console.log(ttest1);
     let ttest2 = calculateTotal(cartItems) - ttest1
     console.log(ttest2);
@@ -48,7 +42,6 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             <InfoBtnBox>
                 <div className='infoBox'>
                     <div className='infoName'>김용희</div>
-                    <div>2022. 10.20. 오후 5:00</div>
                 </div>
                 <div className='btnBox'>                    
                     <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
@@ -57,10 +50,10 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
             </InfoBtnBox>
             <DataBox>
                 {cartItems?.map((ele, id) => (
-                    <div key={id}>
+                    <div className='data' key={id}>
                         <div>{ele?.name}</div>
-                        <div>{ele?.price}</div>
-                        <div>{ele?.count}</div>                       
+                        <div>{ele?.price}원</div>
+                        <div>{ele?.count}개</div>                       
                         <Button
                             size='small'
                             disableElevation
@@ -79,11 +72,17 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
                         </Button>
                     </div>                   
                 ))}
+                {discountOption?.map((ele, id) => (
+                    <div className='data' key={id}>    
+                        <div>{ele.name}</div>
+                        <div>{ele.rate}</div>
+                    </div>    
+                ))}
             </DataBox>
             <FooterBox>
                 <TotalCountBox>
                     <div>합계</div>
-                    <div>₩{test.length === 0 ? ttest2 : test2 }</div>
+                    <div>{test.length === 0 ? ttest2 : test2 }원</div>
                 </TotalCountBox>
                 <NextBtn>
                     <Button variant="contained">확인</Button>
@@ -123,6 +122,10 @@ const InfoBtnBox = styled.div`
 
 const DataBox = styled.div`
     height: 450px;
+    .data {
+        margin: 10px;
+    }
+    
 `;
 
 const FooterBox = styled.div`

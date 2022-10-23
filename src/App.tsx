@@ -21,12 +21,9 @@ export type IdiscountData = {
 function App() {
   const [surgeryData, setSurgeryData] = useState<IsurgeryData[]>([]);
   const [disCountData, setDiscountData] = useState<IdiscountData[]>([]);
-  // const [discountOption, setDiscountOption] = useState<IdiscountData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
-  const [discountOption, setDiscountOption]:any = useState([])
-  // console.log(cartItems);
-  // console.log(disCountData);
-  console.log(discountOption);
+  const [discountOption, setDiscountOption] = useState<IdiscountData[]>([])
+  
   useEffect(() => {
         getData()    
     }, [])
@@ -46,10 +43,8 @@ function App() {
     }
   
   const handleAddToCart = (clickedItem:IsurgeryData) => {
-    console.log(clickedItem);
     setCartItems(prev => {
       const isItemInCart = prev.find(item => item.name === clickedItem.name);
-
       if (isItemInCart) {
         return prev.map(item =>
           item.name === clickedItem.name
@@ -58,22 +53,6 @@ function App() {
         );
       }
       return [...prev, { ...clickedItem, count: 1 }];
-    });
-  }
-
-  const handleAddToFirstCart = (clickedItem:IsurgeryData) => {
-    console.log(clickedItem);
-    setCartItems(prev => {
-      const isItemInCart = prev.find(item => item.name === clickedItem.name);
-
-      if (isItemInCart) {
-        // return prev.map(item =>
-        //   item.name === clickedItem.name
-        //     ? { ...item, count: item.count + 1 }
-        //     : item
-        // );
-      }
-      return [{ ...clickedItem, count: 1 }];
     });
   }
 
@@ -90,20 +69,15 @@ function App() {
       }, [] as IsurgeryData[])
     );
   };
-   
-  const handleAddDiscount = (clickedItem:IdiscountData) => {
-    console.log(clickedItem);
-  }
 
-  const handleCheckChange = (checked:any ,name:any) => {
+  const handleCheckChange = (checked:boolean ,ele:IdiscountData) => {
     console.log(checked);
-    console.log(name);
+    console.log(ele);
     if(checked) {
-      console.log(name);
-      setDiscountOption([...discountOption, name])
+      setDiscountOption([...discountOption, ele])
     } 
     else {
-      setDiscountOption(discountOption.filter((ele:any) => String(ele?.name) !== String(name?.name)))
+      setDiscountOption(discountOption.filter((item) => String(item?.name) !== String(ele?.name)))
     }
   } 
   return (
@@ -117,13 +91,10 @@ function App() {
             discountOption={discountOption}
             removeFromCart={handleRemoveFromCart}    
             />}/>
-          <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToFirstCart={handleAddToFirstCart} surgeryItems={surgeryData} />}/>
-          <Route path="/DiscountMenu" element={<DiscountMenu 
-            handleAddDiscount={handleAddDiscount} 
-            discountItems={disCountData}
-            handleCheckChange={handleCheckChange} 
-            discountOption={discountOption}
-           />}/>                                
+          <Route path="/SurgeryMenu" element={<SurgeryMenu handleAddToCart={handleAddToCart} surgeryItems={surgeryData} />}/>
+          <Route path="/DiscountMenu" 
+          element={<DiscountMenu  discountItems={disCountData} handleCheckChange={handleCheckChange} 
+          />}/>                                
         </Routes>
       </BrowserRouter>
     </Layout>

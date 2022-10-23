@@ -6,12 +6,10 @@ import { IdiscountData } from '../App';
 
 type Props = {
     discountItems: IdiscountData[];
-    handleAddDiscount: (clickedItem: IdiscountData ) => void;
     handleCheckChange: any
-    discountOption:any
 }
 
-const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handleCheckChange, discountOption, } ) => {
+const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) => {
     const navigate = useNavigate();  
     const surgeryClick = () => {navigate(`/SurgeryMenu`)};
     const homeClick = () => {navigate(`/`)}
@@ -31,7 +29,6 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
             <InfoBtnBox>
                 <div className='infoBox'>
                     <div className='infoName'>김용희</div>
-                    <div>2022. 10.20. 오후 5:00</div>
                 </div>
                 <div className='btnBox'>                    
                     <Button onClick={surgeryClick} style={{backgroundColor: "#ede7f6"}} variant="contained">시술</Button>
@@ -40,9 +37,9 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
             </InfoBtnBox>
             <DataBox>
                 <div>
-                    {discountItems?.map((ele:any, id) => (
-                    <div key={id}>    
-                        <div onClick={()=>handleAddDiscount(ele)}>{ele?.name}</div>
+                    {discountItems?.map((ele, id) => (
+                    <div className='data' key={id}>    
+                        <div>{ele?.name}</div>
                         <div>{ele?.rate}</div>                    
                         <input
                             type="checkbox"
@@ -52,10 +49,7 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleAddDiscount, handl
                             onChange={(e) => {
                                 handleCheckChange(e.target.checked ,ele)
                                 handleOnChange(id)
-                                }
-                           
-                            }
-                            
+                                }}                            
                             checked={checkedState[id]}>
                         </input> 
                     </div>   
@@ -101,6 +95,9 @@ const InfoBtnBox = styled.div`
 
 const DataBox = styled.div`
     height: 450px;
+    .data {
+        margin: 10px;
+    }
 `;
 
 const FooterBox = styled.div`
@@ -108,13 +105,6 @@ const FooterBox = styled.div`
     justify-content: center;
     justify-items: center;
     font-weight: bolder;
-`;
-
-const TotalCountBox = styled.div`
-    margin: 10px;
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 100px;   
 `;
 
 const NextBtn = styled.div`
