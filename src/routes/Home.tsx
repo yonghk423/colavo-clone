@@ -74,8 +74,8 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
                 ))}
                 {discountOption?.map((ele, id) => (
                     <div className='data' key={id}>    
-                        <div className='name'>{ele.name}</div>
-                        <div className='rate'>{ele.rate}%</div>
+                        <div className='name'>{ele?.name}</div>
+                        <div className='rate'>{ele?.rate}%</div>
                     </div>    
                 ))}
             </DataBox>

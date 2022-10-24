@@ -14,15 +14,11 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) =>
     const surgeryClick = () => {navigate(`/SurgeryMenu`)};
     const homeClick = () => {navigate(`/`)}
     const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(false));
-    console.log(checkedState);
-    console.log(discountItems);
-    const handleOnChange = (position:any) => {
+    const handleOnChange = (position:number) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-
     setCheckedState(updatedCheckedState);    
-
   };
     return (
         <Container>
@@ -43,7 +39,7 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) =>
                         <div className='rate'>{ele?.rate}%</div>                    
                         <input
                             className='check'
-                            type="checkbox"
+                            type="checkbox"                            
                             id={`custom-checkbox-${id}`}
                             name={ele?.name}
                             value={ele?.name}
