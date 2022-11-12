@@ -20,7 +20,7 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     let calculateTotal = (cartItems: IsurgeryData[]) => (
     cartItems.reduce((first:number, cartItems) => first + cartItems.count * cartItems.price, 0)
     );
-
+    console.log(cartItems)
  //-------------------------할인 옵션 선택 -------------------------------------------
     let test = discountOption.map((ele) => ele.rate * calculateTotal(cartItems))
     let test1 = test.reduce((a:number, b:number) => (a + b), 0)
@@ -29,11 +29,8 @@ const Home:React.FC<Props> = ( { cartItems, addToCart, removeFromCart, discountI
     let ttest = discountItems.map((ele) => 
         ele.rate * calculateTotal(cartItems)
     )
-    console.log(ttest);
     let ttest1 = ttest.reduce((a:number, b:number) => (a + b), 0)
-    console.log(ttest1);
     let total = calculateTotal(cartItems) - ttest1
-    console.log(total);
 
     return (
         <Container>

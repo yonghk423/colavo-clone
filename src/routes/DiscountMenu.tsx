@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import Button from '@mui/material/Button';
@@ -14,12 +14,20 @@ const DiscountMenu:React.FC<Props> = ( { discountItems, handleCheckChange } ) =>
     const surgeryClick = () => {navigate(`/SurgeryMenu`)};
     const homeClick = () => {navigate(`/`)}
     const [checkedState, setCheckedState] = useState(new Array(discountItems.length).fill(false));
-    const handleOnChange = (position:number) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);    
-  };
+    console.log(checkedState);
+   
+//     const handleOnChange = (position:number) => {
+//     const updatedCheckedState = checkedState.map((item, index) =>
+//       index === position ? !item : item
+//     );
+//     setCheckedState(updatedCheckedState);    
+//   };
+    const handleOnChange = useCallback((position:number) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+        index === position ? !item : item
+        );
+        setCheckedState(updatedCheckedState);    
+    }, [checkedState])
     return (
         <Container>
             <InfoBtnBox>

@@ -23,7 +23,8 @@ function App() {
   const [disCountData, setDiscountData] = useState<IdiscountData[]>([]);
   const [cartItems, setCartItems] = useState([] as IsurgeryData[]);
   const [discountOption, setDiscountOption] = useState<IdiscountData[]>([])
-  
+  console.log(surgeryData);
+  console.log(cartItems);
   useEffect(() => {
         getData()    
     }, [])
